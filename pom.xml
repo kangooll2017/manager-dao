@@ -8,7 +8,7 @@
   <artifactId>manager-dao</artifactId>
   <dependencies>
   
-  		<!-- 依赖pojo的bean类 -->
+  		<!-- 依赖 -->
 		<dependency>
 			<groupId>com.chilema.item</groupId>
 			<artifactId>manager-pojo</artifactId>

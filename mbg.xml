@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-	<!-- 使用复杂的逆向工程 -->
+	<!-- 逆向工程 -->
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		
 		<!-- 去掉大量的注解 -->

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<settings>
-		<!-- 开启驼峰命名规则 -->
+		<!-- 开启驼峰命名的规则 -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
 	<!-- 分页插件 -->
