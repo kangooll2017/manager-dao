@@ -4,45 +4,52 @@
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-	<!-- 逆向工程 -->
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		
-		<!-- 去掉大量的注解 -->
+		<!-- 取消生成文件的注释 -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		
+		<!-- 指导连接到哪个数据库 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/chilema" userId="root"
-			password="123456">
+			connectionURL="jdbc:mysql://localhost:3306/chilemei" userId="root" password="123456">
 		</jdbcConnection>
 
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
-		<!-- pojo生成的地方 , 注意自定义的部分mymanager-pojo -->
-		<javaModelGenerator targetPackage="com.chilema.manager.bean"
-			targetProject="..\manager-pojo\src\main\java">
+		<!-- pojo生成的位置 -->
+		<javaModelGenerator targetPackage="com.chilema.manager.bean" targetProject="..\chilema-manager-pojo\src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
-		<!-- sql映射文件生成的地方 -->
-		<sqlMapGenerator targetPackage="mybatis.mapper"
-			targetProject=".\src\main\resources">
+		<!-- mapper映射文件生成的地方 -->
+		<sqlMapGenerator targetPackage="mybatis.mapper" targetProject=".\src\main\resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- dao接口生成的地方 -->
-		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.chilema.manager.dao" targetProject=".\src\main\java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.chilema.manager.dao" targetProject=".\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 		<!-- 只要是数据库对应的pojo，我们都以T开头 -->
-		<table tableName="t_user" domainObjectName="TUser"></table>
-		
-
+		<!-- 指定要逆向的每一张表,用户表 -->
+<!-- 			<table tableName="t_user" domainObjectName="User"></table> 	 -->
+<!-- 			<table tableName="t_user_address" domainObjectName="UserAddress"></table>  -->
+<!-- 			<table tableName="t_shop" domainObjectName="Shop"></table>  -->
+<!-- 			<table tableName="t_shop_cert" domainObjectName="ShopCert"></table>  -->
+<!-- 			<table tableName="t_order" domainObjectName="Order"></table>  -->
+<!-- 			<table tableName="t_order_food" domainObjectName="OrderFood"></table>  -->
+<!-- 			<table tableName="t_manager" domainObjectName="Manager"></table> 	 -->
+<!-- 			<table tableName="t_food" domainObjectName="Food"></table> 	 -->
+<!-- 			<table tableName="t_cert" domainObjectName="Cert"></table> 	 -->
+<!-- 			<table tableName="t_permission" domainObjectName="Permission"></table> -->
+<!-- 			<table tableName="t_manager_permission" domainObjectName="ManagerPermission"></table> -->
+<!-- 			<table tableName="t_complain" domainObjectName="Complain"></table> -->
+			<table tableName="t_manager_token" domainObjectName="ManagerToken"></table>
 	</context>
 </generatorConfiguration>

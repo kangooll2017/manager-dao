@@ -3,12 +3,13 @@
 <mapper namespace="com.chilema.manager.dao.ShopMapper">
   <resultMap id="BaseResultMap" type="com.chilema.manager.bean.Shop">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="pictureUrl" jdbcType="VARCHAR" property="pictureurl" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
     <result column="sales" jdbcType="TINYINT" property="sales" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="label" jdbcType="VARCHAR" property="label" />
@@ -74,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, password, money, email, phone, pictureUrl, sales, status, label, address, 
-    approvestatus
+    id, account, password, name, email, phone, pictureUrl, money, sales, status, label, 
+    address, approvestatus
   </sql>
   <select id="selectByExample" parameterType="com.chilema.manager.bean.ShopExample" resultMap="BaseResultMap">
     select
@@ -108,16 +109,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.chilema.manager.bean.Shop">
-    insert into t_shop (id, name, password, 
-      money, email, phone, 
-      pictureUrl, sales, status, 
-      label, address, approvestatus
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{money,jdbcType=DECIMAL}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{pictureurl,jdbcType=VARCHAR}, #{sales,jdbcType=TINYINT}, #{status,jdbcType=INTEGER}, 
-      #{label,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{approvestatus,jdbcType=INTEGER}
-      )
+    insert into t_shop (id, account, password, 
+      name, email, phone, 
+      pictureUrl, money, sales, 
+      status, label, address, 
+      approvestatus)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{pictureurl,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{sales,jdbcType=TINYINT}, 
+      #{status,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{approvestatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.chilema.manager.bean.Shop">
     insert into t_shop
@@ -125,14 +126,14 @@
       <if test="id != null">
         id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="account != null">
+        account,
       </if>
       <if test="password != null">
         password,
       </if>
-      <if test="money != null">
-        money,
+      <if test="name != null">
+        name,
       </if>
       <if test="email != null">
         email,
@@ -142,6 +143,9 @@
       </if>
       <if test="pictureurl != null">
         pictureUrl,
+      </if>
+      <if test="money != null">
+        money,
       </if>
       <if test="sales != null">
         sales,
@@ -163,14 +167,14 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="money != null">
-        #{money,jdbcType=DECIMAL},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
@@ -180,6 +184,9 @@
       </if>
       <if test="pictureurl != null">
         #{pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
       </if>
       <if test="sales != null">
         #{sales,jdbcType=TINYINT},
@@ -210,14 +217,14 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.account != null">
+        account = #{record.account,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.money != null">
-        money = #{record.money,jdbcType=DECIMAL},
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
@@ -227,6 +234,9 @@
       </if>
       <if test="record.pictureurl != null">
         pictureUrl = #{record.pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null">
+        money = #{record.money,jdbcType=DECIMAL},
       </if>
       <if test="record.sales != null">
         sales = #{record.sales,jdbcType=TINYINT},
@@ -251,12 +261,13 @@
   <update id="updateByExample" parameterType="map">
     update t_shop
     set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      money = #{record.money,jdbcType=DECIMAL},
+      name = #{record.name,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       pictureUrl = #{record.pictureurl,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DECIMAL},
       sales = #{record.sales,jdbcType=TINYINT},
       status = #{record.status,jdbcType=INTEGER},
       label = #{record.label,jdbcType=VARCHAR},
@@ -269,14 +280,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.chilema.manager.bean.Shop">
     update t_shop
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="money != null">
-        money = #{money,jdbcType=DECIMAL},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
@@ -286,6 +297,9 @@
       </if>
       <if test="pictureurl != null">
         pictureUrl = #{pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
       </if>
       <if test="sales != null">
         sales = #{sales,jdbcType=TINYINT},
@@ -307,12 +321,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chilema.manager.bean.Shop">
     update t_shop
-    set name = #{name,jdbcType=VARCHAR},
+    set account = #{account,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      money = #{money,jdbcType=DECIMAL},
+      name = #{name,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       pictureUrl = #{pictureurl,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
       sales = #{sales,jdbcType=TINYINT},
       status = #{status,jdbcType=INTEGER},
       label = #{label,jdbcType=VARCHAR},

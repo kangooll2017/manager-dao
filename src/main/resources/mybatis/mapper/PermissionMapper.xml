@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chilema.manager.dao.ManagerMapper">
-  <resultMap id="BaseResultMap" type="com.chilema.manager.bean.Manager">
+<mapper namespace="com.chilema.manager.dao.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.chilema.manager.bean.Permission">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
   
-  <!-- Manager getManagerByRemToken(String remToken); -->
-  <select id="getManagerByRemToken" resultMap="BaseResultMap">
-  SELECT m.* FROM t_manager m 
-	LEFT JOIN t_manager_token mt ON m.`id`=mt.`mid`
-	WHERE mt.`rem_token`=#{remToken}
+  <!--   List<Permission> getPermissonByManagerIdPackage(Integer mid);  -->
+  <select id="getPermissonByManagerIdPackage" resultMap="BaseResultMap">
+	  SELECT p.* FROM t_permission p 
+		LEFT JOIN t_manager_permission mp ON p.`id`=mp.`pid`
+		LEFT JOIN t_manager m ON m.`id`=mp.`mid`
+		WHERE m.`id`=#{mid}
+  </select>
+  
+  <!--  List<Permission> getPermissonByManagerId(@Param("mid")Integer id); -->
+  <select id="getPermissonByManagerId" resultMap="BaseResultMap">
+  	SELECT p.`id`,p.`pid`,p.`name`,p.`icon`,p.`url`  FROM t_permission p
+	JOIN t_manager_permission mp ON p.`id` = mp.`pid`
+		WHERE mp.`mid`=#{mid}
   </select>
   
   <sql id="Example_Where_Clause">
@@ -74,15 +83,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, password, email
+    id, pid, name, icon, url
   </sql>
-  <select id="selectByExample" parameterType="com.chilema.manager.bean.ManagerExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.chilema.manager.bean.PermissionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_manager
+    from t_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,76 +102,85 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_manager
+    from t_permission
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_manager
+    delete from t_permission
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.chilema.manager.bean.ManagerExample">
-    delete from t_manager
+  <delete id="deleteByExample" parameterType="com.chilema.manager.bean.PermissionExample">
+    delete from t_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.chilema.manager.bean.Manager">
-    insert into t_manager (id, account, password, 
-      email)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.chilema.manager.bean.Permission">
+    insert into t_permission (id, pid, name, 
+      icon, url)
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.chilema.manager.bean.Manager">
-    insert into t_manager
+  <insert id="insertSelective" parameterType="com.chilema.manager.bean.Permission">
+    insert into t_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="account != null">
-        account,
+      <if test="pid != null">
+        pid,
       </if>
-      <if test="password != null">
-        password,
+      <if test="name != null">
+        name,
       </if>
-      <if test="email != null">
-        email,
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="url != null">
+        url,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="account != null">
-        #{account,jdbcType=VARCHAR},
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.chilema.manager.bean.ManagerExample" resultType="java.lang.Long">
-    select count(*) from t_manager
+  <select id="countByExample" parameterType="com.chilema.manager.bean.PermissionExample" resultType="java.lang.Long">
+    select count(*) from t_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_manager
+    update t_permission
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.account != null">
-        account = #{record.account,jdbcType=VARCHAR},
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
       </if>
-      <if test="record.password != null">
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
+      <if test="record.icon != null">
+        icon = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -170,35 +188,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_manager
+    update t_permission
     set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR}
+      pid = #{record.pid,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      icon = #{record.icon,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chilema.manager.bean.Manager">
-    update t_manager
+  <update id="updateByPrimaryKeySelective" parameterType="com.chilema.manager.bean.Permission">
+    update t_permission
     <set>
-      <if test="account != null">
-        account = #{account,jdbcType=VARCHAR},
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
       </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.chilema.manager.bean.Manager">
-    update t_manager
-    set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.chilema.manager.bean.Permission">
+    update t_permission
+    set pid = #{pid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

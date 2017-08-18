@@ -5,33 +5,33 @@
  *    Copyright (c) 2001-2014 Digital Telemedia Co.,Ltd
  *    http://www.d-telemedia.com/
  *
- *    Package:     com.chilema.manager.dao
+ *    Package:     sad
  *
  *    Filename:    package-info.java
  *
- *    Description: 测试
+ *    Description: TODO(用一句话描述该文件做什么)
  *
  *    Copyright:   Copyright (c) 2001-2014
  *
  *    Company:     Digital Telemedia Co.,Ltd
  *
- *    @author:     Kang
+ *    @author:     2x
  *
  *    @version:    1.0.0
  *
- *    Create at:   2017年8月8日 下午6:45:46
+ *    Create at:   2017年8月10日 下午2:38:16
  *
  *    Revision:
  *
- *    2017年8月8日 下午6:45:46
+ *    2017年8月10日 下午2:38:16
  *        - first revision
  *
  *****************************************************************/
 /**
  * @ClassName package-info
  * @Description TODO(这里用一句话描述这个类的作用)
- * @author Kang
- * @Date 2017年8月8日 下午6:45:46
+ * @author 2x
+ * @Date 2017年8月10日 下午2:38:16
  * @version 1.0.0
  */
 package com.chilema.manager.dao;

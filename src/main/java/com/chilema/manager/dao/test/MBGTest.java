@@ -9,7 +9,14 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
-//逆向工程
+/**
+ * MBG逆向工程自动生成的代码文件
+ * @ClassName MBGTest
+ * @Description TODO(这里用一句话描述这个类的作用)
+ * @author 2x
+ * @Date 2017年7月4日 下午7:14:57
+ * @version 1.0.0
+ */
 public class MBGTest {
     public static void main(String[] args) throws Exception {
         List<String> warnings = new ArrayList<String>();
@@ -20,7 +27,6 @@ public class MBGTest {
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
         myBatisGenerator.generate(null);
-        System.out.println("生成成功！");
+        System.out.println("生成OK！");
     }
-    
 }

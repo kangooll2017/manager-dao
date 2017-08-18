@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chilema.manager.dao.ManagerMapper">
-  <resultMap id="BaseResultMap" type="com.chilema.manager.bean.Manager">
+<mapper namespace="com.chilema.manager.dao.ShopCertMapper">
+  <resultMap id="BaseResultMap" type="com.chilema.manager.bean.ShopCert">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="id_img" jdbcType="VARCHAR" property="idImg" />
+    <result column="trad_img" jdbcType="VARCHAR" property="tradImg" />
+    <result column="heath_img" jdbcType="VARCHAR" property="heathImg" />
   </resultMap>
-  
-  <!-- Manager getManagerByRemToken(String remToken); -->
-  <select id="getManagerByRemToken" resultMap="BaseResultMap">
-  SELECT m.* FROM t_manager m 
-	LEFT JOIN t_manager_token mt ON m.`id`=mt.`mid`
-	WHERE mt.`rem_token`=#{remToken}
-  </select>
-  
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -74,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, password, email
+    id, sid, id_img, trad_img, heath_img
   </sql>
-  <select id="selectByExample" parameterType="com.chilema.manager.bean.ManagerExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.chilema.manager.bean.ShopCertExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_manager
+    from t_shop_cert
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,76 +86,85 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_manager
+    from t_shop_cert
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_manager
+    delete from t_shop_cert
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.chilema.manager.bean.ManagerExample">
-    delete from t_manager
+  <delete id="deleteByExample" parameterType="com.chilema.manager.bean.ShopCertExample">
+    delete from t_shop_cert
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.chilema.manager.bean.Manager">
-    insert into t_manager (id, account, password, 
-      email)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.chilema.manager.bean.ShopCert">
+    insert into t_shop_cert (id, sid, id_img, 
+      trad_img, heath_img)
+    values (#{id,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{idImg,jdbcType=VARCHAR}, 
+      #{tradImg,jdbcType=VARCHAR}, #{heathImg,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.chilema.manager.bean.Manager">
-    insert into t_manager
+  <insert id="insertSelective" parameterType="com.chilema.manager.bean.ShopCert">
+    insert into t_shop_cert
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="account != null">
-        account,
+      <if test="sid != null">
+        sid,
       </if>
-      <if test="password != null">
-        password,
+      <if test="idImg != null">
+        id_img,
       </if>
-      <if test="email != null">
-        email,
+      <if test="tradImg != null">
+        trad_img,
+      </if>
+      <if test="heathImg != null">
+        heath_img,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="account != null">
-        #{account,jdbcType=VARCHAR},
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="idImg != null">
+        #{idImg,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="tradImg != null">
+        #{tradImg,jdbcType=VARCHAR},
+      </if>
+      <if test="heathImg != null">
+        #{heathImg,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.chilema.manager.bean.ManagerExample" resultType="java.lang.Long">
-    select count(*) from t_manager
+  <select id="countByExample" parameterType="com.chilema.manager.bean.ShopCertExample" resultType="java.lang.Long">
+    select count(*) from t_shop_cert
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_manager
+    update t_shop_cert
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.account != null">
-        account = #{record.account,jdbcType=VARCHAR},
+      <if test="record.sid != null">
+        sid = #{record.sid,jdbcType=INTEGER},
       </if>
-      <if test="record.password != null">
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.idImg != null">
+        id_img = #{record.idImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
+      <if test="record.tradImg != null">
+        trad_img = #{record.tradImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.heathImg != null">
+        heath_img = #{record.heathImg,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -170,35 +172,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_manager
+    update t_shop_cert
     set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR}
+      sid = #{record.sid,jdbcType=INTEGER},
+      id_img = #{record.idImg,jdbcType=VARCHAR},
+      trad_img = #{record.tradImg,jdbcType=VARCHAR},
+      heath_img = #{record.heathImg,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chilema.manager.bean.Manager">
-    update t_manager
+  <update id="updateByPrimaryKeySelective" parameterType="com.chilema.manager.bean.ShopCert">
+    update t_shop_cert
     <set>
-      <if test="account != null">
-        account = #{account,jdbcType=VARCHAR},
+      <if test="sid != null">
+        sid = #{sid,jdbcType=INTEGER},
       </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+      <if test="idImg != null">
+        id_img = #{idImg,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+      <if test="tradImg != null">
+        trad_img = #{tradImg,jdbcType=VARCHAR},
+      </if>
+      <if test="heathImg != null">
+        heath_img = #{heathImg,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.chilema.manager.bean.Manager">
-    update t_manager
-    set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.chilema.manager.bean.ShopCert">
+    update t_shop_cert
+    set sid = #{sid,jdbcType=INTEGER},
+      id_img = #{idImg,jdbcType=VARCHAR},
+      trad_img = #{tradImg,jdbcType=VARCHAR},
+      heath_img = #{heathImg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

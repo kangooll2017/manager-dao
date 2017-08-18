@@ -2,7 +2,9 @@ package com.chilema.manager.dao;
 
 import com.chilema.manager.bean.Manager;
 import com.chilema.manager.bean.ManagerExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ManagerMapper {
@@ -27,4 +29,6 @@ public interface ManagerMapper {
     int updateByPrimaryKeySelective(Manager record);
 
     int updateByPrimaryKey(Manager record);
+
+    Manager getManagerByRemToken(@Param("remToken")String remToken);
 }

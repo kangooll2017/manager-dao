@@ -3,8 +3,9 @@
 <mapper namespace="com.chilema.manager.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.chilema.manager.bean.User">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="INTEGER" property="name" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="pictureUrl" jdbcType="VARCHAR" property="pictureurl" />
     <result column="integral" jdbcType="INTEGER" property="integral" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, password, email, pictureUrl, integral, balance
+    id, account, password, name, email, pictureUrl, integral, balance
   </sql>
   <select id="selectByExample" parameterType="com.chilema.manager.bean.UserExample" resultMap="BaseResultMap">
     select
@@ -102,12 +103,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.chilema.manager.bean.User">
-    insert into t_user (id, name, password, 
-      email, pictureUrl, integral, 
-      balance)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR}, #{integral,jdbcType=INTEGER}, 
-      #{balance,jdbcType=DECIMAL})
+    insert into t_user (id, account, password, 
+      name, email, pictureUrl, 
+      integral, balance)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR}, 
+      #{integral,jdbcType=INTEGER}, #{balance,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.chilema.manager.bean.User">
     insert into t_user
@@ -115,11 +116,14 @@
       <if test="id != null">
         id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="account != null">
+        account,
       </if>
       <if test="password != null">
         password,
+      </if>
+      <if test="name != null">
+        name,
       </if>
       <if test="email != null">
         email,
@@ -138,11 +142,14 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=INTEGER},
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
@@ -170,11 +177,14 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=INTEGER},
+      <if test="record.account != null">
+        account = #{record.account,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
@@ -196,8 +206,9 @@
   <update id="updateByExample" parameterType="map">
     update t_user
     set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=INTEGER},
+      account = #{record.account,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       pictureUrl = #{record.pictureurl,jdbcType=VARCHAR},
       integral = #{record.integral,jdbcType=INTEGER},
@@ -209,11 +220,14 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.chilema.manager.bean.User">
     update t_user
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=INTEGER},
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
@@ -232,8 +246,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chilema.manager.bean.User">
     update t_user
-    set name = #{name,jdbcType=INTEGER},
+    set account = #{account,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       pictureUrl = #{pictureurl,jdbcType=VARCHAR},
       integral = #{integral,jdbcType=INTEGER},

@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chilema.manager.dao.ManagerMapper">
-  <resultMap id="BaseResultMap" type="com.chilema.manager.bean.Manager">
+<mapper namespace="com.chilema.manager.dao.ManagerTokenMapper">
+  <resultMap id="BaseResultMap" type="com.chilema.manager.bean.ManagerToken">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mid" jdbcType="INTEGER" property="mid" />
+    <result column="pswd_token" jdbcType="VARCHAR" property="pswdToken" />
+    <result column="pswd_time" jdbcType="DATE" property="pswdTime" />
+    <result column="rem_token" jdbcType="VARCHAR" property="remToken" />
   </resultMap>
-  
-  <!-- Manager getManagerByRemToken(String remToken); -->
-  <select id="getManagerByRemToken" resultMap="BaseResultMap">
-  SELECT m.* FROM t_manager m 
-	LEFT JOIN t_manager_token mt ON m.`id`=mt.`mid`
-	WHERE mt.`rem_token`=#{remToken}
-  </select>
-  
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -74,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, password, email
+    id, mid, pswd_token, pswd_time, rem_token
   </sql>
-  <select id="selectByExample" parameterType="com.chilema.manager.bean.ManagerExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.chilema.manager.bean.ManagerTokenExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_manager
+    from t_manager_token
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,76 +86,85 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_manager
+    from t_manager_token
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_manager
+    delete from t_manager_token
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.chilema.manager.bean.ManagerExample">
-    delete from t_manager
+  <delete id="deleteByExample" parameterType="com.chilema.manager.bean.ManagerTokenExample">
+    delete from t_manager_token
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.chilema.manager.bean.Manager">
-    insert into t_manager (id, account, password, 
-      email)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.chilema.manager.bean.ManagerToken">
+    insert into t_manager_token (id, mid, pswd_token, 
+      pswd_time, rem_token)
+    values (#{id,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{pswdToken,jdbcType=VARCHAR}, 
+      #{pswdTime,jdbcType=DATE}, #{remToken,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.chilema.manager.bean.Manager">
-    insert into t_manager
+  <insert id="insertSelective" parameterType="com.chilema.manager.bean.ManagerToken">
+    insert into t_manager_token
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="account != null">
-        account,
+      <if test="mid != null">
+        mid,
       </if>
-      <if test="password != null">
-        password,
+      <if test="pswdToken != null">
+        pswd_token,
       </if>
-      <if test="email != null">
-        email,
+      <if test="pswdTime != null">
+        pswd_time,
+      </if>
+      <if test="remToken != null">
+        rem_token,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="account != null">
-        #{account,jdbcType=VARCHAR},
+      <if test="mid != null">
+        #{mid,jdbcType=INTEGER},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="pswdToken != null">
+        #{pswdToken,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="pswdTime != null">
+        #{pswdTime,jdbcType=DATE},
+      </if>
+      <if test="remToken != null">
+        #{remToken,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.chilema.manager.bean.ManagerExample" resultType="java.lang.Long">
-    select count(*) from t_manager
+  <select id="countByExample" parameterType="com.chilema.manager.bean.ManagerTokenExample" resultType="java.lang.Long">
+    select count(*) from t_manager_token
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_manager
+    update t_manager_token
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.account != null">
-        account = #{record.account,jdbcType=VARCHAR},
+      <if test="record.mid != null">
+        mid = #{record.mid,jdbcType=INTEGER},
       </if>
-      <if test="record.password != null">
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.pswdToken != null">
+        pswd_token = #{record.pswdToken,jdbcType=VARCHAR},
       </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
+      <if test="record.pswdTime != null">
+        pswd_time = #{record.pswdTime,jdbcType=DATE},
+      </if>
+      <if test="record.remToken != null">
+        rem_token = #{record.remToken,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -170,35 +172,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_manager
+    update t_manager_token
     set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR}
+      mid = #{record.mid,jdbcType=INTEGER},
+      pswd_token = #{record.pswdToken,jdbcType=VARCHAR},
+      pswd_time = #{record.pswdTime,jdbcType=DATE},
+      rem_token = #{record.remToken,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chilema.manager.bean.Manager">
-    update t_manager
+  <update id="updateByPrimaryKeySelective" parameterType="com.chilema.manager.bean.ManagerToken">
+    update t_manager_token
     <set>
-      <if test="account != null">
-        account = #{account,jdbcType=VARCHAR},
+      <if test="mid != null">
+        mid = #{mid,jdbcType=INTEGER},
       </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+      <if test="pswdToken != null">
+        pswd_token = #{pswdToken,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+      <if test="pswdTime != null">
+        pswd_time = #{pswdTime,jdbcType=DATE},
+      </if>
+      <if test="remToken != null">
+        rem_token = #{remToken,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.chilema.manager.bean.Manager">
-    update t_manager
-    set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.chilema.manager.bean.ManagerToken">
+    update t_manager_token
+    set mid = #{mid,jdbcType=INTEGER},
+      pswd_token = #{pswdToken,jdbcType=VARCHAR},
+      pswd_time = #{pswdTime,jdbcType=DATE},
+      rem_token = #{remToken,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
